@@ -8,18 +8,18 @@
 
             <!-- login field with emptiness handling -->
                 <div class="form-group" ng-class="{'has-error has-feedback': sign.login.$touched && sign.login.$invalid}">
-                    <input name="login" type="text" id="inputLogin" class="form-control" ng-model="loginVm.login" ng-required="true" placeholder="Login"
+                    <input name="login" type="text" id="inputLogin" class="form-control" ng-model="loginVm.login" ng-required="true" placeholder="Логін"
                     ng-focus="loginVm.focusLogin=true" ng-blur="loginVm.focusLogin=false">
                     <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="sign.login.$touched && sign.login.$invalid && !loginVm.focusLogin"></span>
                 </div>
 
             <!-- password field with emptiness handling -->
                 <div class="form-group" ng-class="{'has-error has-feedback': sign.password.$touched && sign.password.$invalid}">
-                    <input name="password" type="password" id="inputPassword" class="form-control" ng-model="loginVm.password" ng-required="true" placeholder="Password" ng-focus="loginVm.focusPassword=true" ng-blur="loginVm.focusPassword=false">
+                    <input name="password" type="password" id="inputPassword" class="form-control" ng-model="loginVm.password" ng-required="true" placeholder="Пароль" ng-focus="loginVm.focusPassword=true" ng-blur="loginVm.focusPassword=false">
 
                     <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="sign.password.$touched && sign.password.$invalid && !loginVm.focusPassword"></span>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" ng-disabled="sign.$invalid" type="submit" ng-click="loginVm.signIn()">Sign in</button>
+                <button class="submit-button btn btn-lg btn-primary btn-block btn-signin" ng-disabled="sign.$invalid" type="submit" ng-click="loginVm.signIn()">Увійти</button>
             </form>
 
             <!--login exception -->

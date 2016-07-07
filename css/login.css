@@ -15,7 +15,7 @@ body, html {
     padding: 40px 40px;
 }
 
-.btn {
+.submit-button {
     font-weight: 700;
     height: 36px;
     -moz-user-select: none;
