@@ -11,5 +11,8 @@ function RouteProviding($routeProvider) {
     }).when('/index', {
         templateUrl: 'pages/main.html',
         controller: 'mainPageController'
+    }).when('/systemActions', {
+        templateUrl: 'pages/systemActions.html',
+        controller: 'systemActionsController'
     }).otherwise('/index');
 }

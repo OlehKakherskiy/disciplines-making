@@ -24,7 +24,7 @@ function LoginController($http, $location, accessTokenSharingService) {
         var loginSuccess = function (response) {
             accessTokenSharingService.set(response);
             accessTokenSharingService.status.logged = true;
-            $location.path('/disciplineCatalogue');
+            $location.path('/systemActions');
         };
 
         //login error handling

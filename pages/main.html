@@ -35,7 +35,7 @@
         <div class="panel panel-primary" ng-repeat="info in aboutCampusInfo">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse0-{{$index}}" class="article-title"
+                    <a data-toggle="collapse" role="button" data-target="#collapse0-{{$index}}" class="article-title"
                        ng-click="collapsed = !collapsed"> <span
                             class="glyphicon"
                             ng-class="{'glyphicon-chevron-right': collapsed,  'glyphicon-chevron-down': !collapsed}"></span>

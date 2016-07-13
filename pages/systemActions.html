@@ -1,0 +1,23 @@
+<div class="empty"></div>
+<div>
+    <div class="panel panel-primary" ng-repeat="action in actions">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-target="#collapse0-{{$index}}" class="article-title"
+                   ng-click="collapsed = !collapsed"> <span class="glyphicon"
+                                                            ng-class="{'glyphicon-chevron-right': collapsed,  'glyphicon-chevron-down': !collapsed}"></span>
+                    {{action.title}}
+                </a>
+
+                <a role="button" class="pull-right article-title" data-toggle="tooltip" title="Перейти"
+                   ng-click="loadAction(action.id)()">
+                    <span class="glyphicon glyphicon-arrow-right"></span> </a>
+
+            </h4>
+        </div>
+        <div id="collapse0-{{$index}}" class="panel-collapse collapse" aria-expanded="false"
+             style="text-align: justify">
+            <div class="panel-body article-body">{{action.description}}</div>
+        </div>
+    </div>
+</div>
