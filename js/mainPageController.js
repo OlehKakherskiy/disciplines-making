@@ -55,6 +55,8 @@ function MainPageController($scope) {
         }
     ];
 
+    $scope.collapsed = true;
+
     $scope.changeCollapsed = function () {
         console.log('collapsed');
         $scope.collapsed = !$scope.collapsed;

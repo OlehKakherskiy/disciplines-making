@@ -28,7 +28,8 @@
                                    ng-click="showDetailInformation(item, $index)" data-toggle="tooltip"
                                    title="Переглянути/Редагувати деталі"><span
                                         class="glyphicon glyphicon-pencil"></span></a>
-                                <a class="pull-right btn btn-primary-outline btn-xs" ng-class="{inactive:!activeAddButton}"
+                                <a class="pull-right btn btn-primary-outline btn-xs"
+                                   ng-class="{inactive:!activeAddButton}"
                                    data-toggle="tooltip" title="Додати дисципліну"
                                    ng-disabled="item.nodes && item.nodes.length > 0 && collapsed" data-nodrag
                                    ng-click="addNewDiscipline(this, $index,-1)"><span
@@ -54,48 +55,48 @@
                         </li>
                     </ol>
                 </div>
-                <a class="btn btn-primary-outline btn-lg" data-nodrag ng-class="{inactive:activeAddButton}"
+                <a class="btn btn-primary-outline btn-lg" data-nodrag ng-class="{inactive:!activeAddButton}"
                    ng-click="addNewDiscipline(this, -1) "><span
                         class="glyphicon glyphicon-plus"></span></a>
-                <a class="btn btn-primary-outline btn-lg" ng-class="{inactive : !hasMoreElements}"
+                <a class="btn btn-primary-outline btn-lg" ng-class="{inactive : !hasMoreDisciplines}"
                    ng-click="getMoreElements()"><span class="glyphicon glyphicon-chevron-down"></span></a>
             </div>
-            <div class="alert alert-success" ng-show="addNewSuccess">
-                <a href="" class="close" data-dismiss="alert" aria-label="close"
-                   ng-click="addNewSuccess=undefined">&times;</a>
+
+            <div class="alert alert-success fade in" ng-show="addNewSuccess">
+                <a href="" class="close" aria-label="close" ng-click="resetAddFlag()">&times;</a>
                 Дисципліна <strong>{{discipline.Name}}</strong> додана успішно.
             </div>
 
-            <div class="alert alert-danger" ng-show="addNewSuccess !== undefined && !addNewSuccess">
-                <a href="" class="close" data-dismiss="alert" aria-label="close"
-                   ng-click="addNewSuccess=undefined">&times;</a>
+            <div class="alert alert-danger fade in" ng-show="addNewSuccess !== undefined && !addNewSuccess">
+                <a href="" class="close" aria-label="close"
+                   ng-click="resetAddFlag()">&times;</a>
                 Помилка при додаванні дисципліни <strong>{{discipline.Name}}</strong>. Спробуйте ще раз.
             </div>
 
-            <div class="alert alert-danger" ng-show="updateSuccess !== undefined && !updateSuccess">
-                <a href="" class="close" data-dismiss="alert" aria-label="close"
-                   ng-click="updateSuccess=undefined">&times;</a>
+            <div class="alert alert-danger fade in" ng-show="updateSuccess !== undefined && !updateSuccess">
+                <a href="" class="close" aria-label="close"
+                   ng-click="resetUpdateFlag()">&times;</a>
                 Помилка при оновленні дисципліни <strong>{{discipline.Name}}</strong>. Спробуйте ще раз.
             </div>
 
-            <div class="alert alert-success" ng-show="updateSuccess" ng-click="updateSuccess=undefined">
-                <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>Дисципліна
+            <div class="alert alert-success fade in" ng-show="updateSuccess" ng-click="resetUpdateFlag()">
+                <a href="" class="close" aria-label="close">&times;</a>Дисципліна
                 {{discipline.Name}} оновлена успішно.
             </div>
 
-            <div class="alert alert-success" ng-show="deleteSuccess" ng-click="deleteSuccess=undefined">
-                <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>Дисципліна
+            <div class="alert alert-success fade in" ng-show="deleteSuccess" ng-click="resetDeleteFlag()">
+                <a href="" class="close" aria-label="close">&times;</a>Дисципліна
                 {{discipline.Name}} видалена успішно.
             </div>
-            <div class="alert alert-danger" ng-show="deleteSuccess!== undefined && !deleteSuccess"
-                 ng-click="deleteSuccess=undefined">
-                <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>Помилка при видаленні
+            <div class="alert alert-danger fade in" ng-show="deleteSuccess!== undefined && !deleteSuccess"
+                 ng-click="resetDeleteFlag()">
+                <a href="" class="close" aria-label="close">&times;</a>Помилка при видаленні
                 дисципліни {{discipline.Name}}. Спробуйте ще раз.
             </div>
         </div>
         <!--Discipline details form-->
         <div class="col-md-4">
-            <div class="card" data-spy="affix" data-offset-bottom="200">
+            <div class="card" data-spy="affix" data-offset-bottom="180">
                 <div class="card-block">
                     <form name="disciplineForm" novalidate>
 
@@ -103,7 +104,7 @@
                              ng-class="{'has-error has-feedback': disciplineForm.Name.$invalid && !disciplineForm.Name.$pristine}">
                             <label for="name">Назва дисципліни:</label>
                             <input type="text" class="form-control" id="name" ng-model="discipline.Name" name="Name"
-                                   ng-disabled="disable"
+                                   ng-disabled="disableForm"
                                    placeholder="Назва дисципліни" required>
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.Name.$invalid && !disciplineForm.Name.$pristine && !focusName"></span>
@@ -117,7 +118,7 @@
                              ng-class="{'has-error has-feedback': disciplineForm.NameShort.$invalid && !disciplineForm.NameShort.$pristine}">
                             <label for="shortName">Скорочена назва дисципліни:</label>
                             <input type="text" class="form-control" id="shortName" ng-model="discipline.NameShort"
-                                   ng-disabled="disable"
+                                   ng-disabled="disableForm"
                                    name="NameShort" placeholder="Скорочена назва дисципліни" required>
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.NameShort.$invalid && !disciplineForm.NameShort.$pristine && !focusShortName"></span>
@@ -132,7 +133,7 @@
                              ng-class="{'has-error has-feedback': disciplineForm.NameEng.$invalid && !disciplineForm.NameEng.$pristine}">
                             <label for="englishName">Назва дисципліни англійською:</label>
                             <input type="text" class="form-control" id="englishName" ng-model="discipline.NameEng"
-                                   ng-disabled="disable"
+                                   ng-disabled="disableForm"
                                    name="NameEng" placeholder="Назва дисципліни англійською" required
                                    ng-pattern="getRegexp('NameEng')">
                             <span class="glyphicon glyphicon-remove form-control-feedback"
@@ -151,7 +152,8 @@
                             <label for="shortEnglishName">Скорочена назва дисципліни англійською:</label>
                             <input type="text" class="form-control" id="shortEnglishName"
                                    ng-model="discipline.NameShortEng" name="NameShortEng"
-                                   placeholder="Скорочена назва дисципліни англійською" required ng-disabled="disable"
+                                   placeholder="Скорочена назва дисципліни англійською" required
+                                   ng-disabled="disableForm"
                                    ng-pattern="getRegexp('NameShortEng')">
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.NameShortEng.$invalid && !disciplineForm.NameShortEng.$pristine && !focusNameEng"></span>
@@ -175,7 +177,7 @@
                              ng-class="{'has-error has-feedback': disciplineForm.Publisher.$invalid && !disciplineForm.Publisher.$pristine}">
                             <label for="publisher">Публікатор:</label>
                             <input type="text" class="form-control" id="publisher" ng-model="discipline.Publisher"
-                                   ng-disabled="disable"
+                                   ng-disabled="disableForm"
                                    name="Publisher" required>
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.Publisher.$invalid && !disciplineForm.Publisher.$pristine && !focusPublisher"></span>
@@ -190,13 +192,13 @@
                             <label for="optradio">Актуальність:</label>
                             <label>
                                 <input type="radio" id="optradio" name="optradio" data-ng-model="discipline.vcActuality"
-                                       ng-disabled="disable"
+                                       ng-disabled="disableForm"
                                        ng-checked="discipline.vcActuality" ng-value="true">
                                 Так
                             </label>
                             <label>
                                 <input type="radio" name="optradio" data-ng-model="discipline.vcActuality"
-                                       ng-disabled="disable"
+                                       ng-disabled="disableForm"
                                        ng-checked="!discipline.vcActuality" ng-value="false">
                                 Ні
                             </label>

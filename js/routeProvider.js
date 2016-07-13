@@ -7,7 +7,7 @@ function RouteProviding($routeProvider) {
         controllerAs: 'loginVm'
     }).when('/disciplineCatalogue', {
         templateUrl: 'pages/disciplineCatalogue.html',
-        controller: 'disciplineCatalogController'
+        controller: 'disciplineCatalogueController'
     }).when('/index', {
         templateUrl: 'pages/main.html',
         controller: 'mainPageController'
