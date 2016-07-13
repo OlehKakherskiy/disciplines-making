@@ -28,7 +28,7 @@
                                    ng-click="showDetailInformation(item, $index)" data-toggle="tooltip"
                                    title="Переглянути/Редагувати деталі"><span
                                         class="glyphicon glyphicon-pencil"></span></a>
-                                <a class="pull-right btn btn-primary-outline btn-xs" ng-class="{inactive:wasAdded}"
+                                <a class="pull-right btn btn-primary-outline btn-xs" ng-class="{inactive:!activeAddButton}"
                                    data-toggle="tooltip" title="Додати дисципліну"
                                    ng-disabled="item.nodes && item.nodes.length > 0 && collapsed" data-nodrag
                                    ng-click="addNewDiscipline(this, $index,-1)"><span
@@ -54,7 +54,7 @@
                         </li>
                     </ol>
                 </div>
-                <a class="btn btn-primary-outline btn-lg" data-nodrag ng-class="{inactive:wasAdded}"
+                <a class="btn btn-primary-outline btn-lg" data-nodrag ng-class="{inactive:activeAddButton}"
                    ng-click="addNewDiscipline(this, -1) "><span
                         class="glyphicon glyphicon-plus"></span></a>
                 <a class="btn btn-primary-outline btn-lg" ng-class="{inactive : !hasMoreElements}"
@@ -95,7 +95,6 @@
         </div>
         <!--Discipline details form-->
         <div class="col-md-4">
-
             <div class="card" data-spy="affix" data-offset-bottom="200">
                 <div class="card-block">
                     <form name="disciplineForm" novalidate>

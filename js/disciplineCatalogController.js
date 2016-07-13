@@ -1,17 +1,15 @@
 angular.module('application').controller('disciplineCatalogController', DisciplineCatalogController);
 
 /**
- *
  * @param $scope
- * @param disciplineService
- * @param accessTokenSharingService
+ * @param disciplineHttpService
  * @constructor
  */
-function DisciplineCatalogController($scope, disciplineService, accessTokenSharingService) {
+function DisciplineCatalogController($scope, disciplineHttpService) {
 
     $scope.showDisciplineInfo = false;
 
-    $scope.wasAdded = false;
+    $scope.activeAddButton = false;
 
     $scope.discipline = {
         DcSubjectWordsID: undefined,
@@ -32,7 +30,7 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
     $scope.updateSuccess = undefined;
     $scope.addNewSuccess = undefined;
 
-    $scope.list = disciplineService.getDescendants(undefined);
+    $scope.list = disciplineHttpService.getDescendants(undefined);
 
     var elementsCountIncrement = 10;
 
@@ -50,6 +48,7 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
         $scope.hasMoreElements = $scope.list.length > $scope.limitTo;
     };
 
+
     var cloneSimpleFields = function (elemFrom, elemTo) {
         elemTo.Name = elemFrom.Name;
         elemTo.NameShort = elemFrom.NameShort;
@@ -62,22 +61,9 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
 
     $scope.disable = true;
 
-    $scope.showDetailInformation = function (element, index1Level, index2Level) {
-        $scope.disable = false;
-
-        console.log(element);
-        console.log(index1Level);
-        console.log(index2Level);
-        level1Index = index1Level;
-        level2Index = index2Level;
-        $scope.discipline = element;
-        cloneSimpleFields(element, disciplineHistory);
-    };
-
     //removes discipline from list and BD
     $scope.removeDiscipline = function (element, index1Level, index2Level) {
         $scope.disable = true;
-        console.log(element);
         var success = undefined;
 
         if ($scope.disciplineForm.$pristine) {
@@ -97,7 +83,7 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
                 level2Index = undefined;
                 $scope.isCollapsed = false;
             }
-            $scope.wasAdded = false;
+            $scope.activeAddButton = true;
             $scope.deleteSuccess = true;
         } else {
             $scope.deleteSuccess = false;
@@ -107,9 +93,8 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
     $scope.addNewDiscipline = function (scope, index1Level) {
         $scope.disable = false;
         var parentDiscipline = scope.$modelValue;
-        $scope.wasAdded = true;
+        $scope.activeAddButton = false;
 
-        console.dir(scope);
         var newOne = {
             DcSubjectWordsID: undefined,
             Name: "Назва",
@@ -123,8 +108,8 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
         };
 
         if (index1Level == -1) { //добавляем элемент в корневой уровень дерева
-            $scope.list.unshift(newOne); // не unshift, а вставка в начало конкретной страницы
-            $scope.showDetailInformation(newOne, 0, -1); //TODO: тут нужно знать номер
+            $scope.list.unshift(newOne);
+            $scope.showDetailInformation(newOne, 0, -1);
             $scope.hasMoreDisciplines();
         } else { //добавляем элемент в поддерево
             parentDiscipline.nodes.push(newOne);
@@ -133,37 +118,76 @@ function DisciplineCatalogController($scope, disciplineService, accessTokenShari
         }
     };
 
+
+    $scope.showDetailInformation = function (element, index1Level, index2Level) {
+        $scope.disable = false;
+        level1Index = index1Level;
+        level2Index = index2Level;
+        $scope.discipline = element;
+        cloneSimpleFields(element, disciplineHistory);
+    };
+
     $scope.refuseChanges = function () {
         cloneSimpleFields(disciplineHistory, $scope.discipline);
         $scope.disciplineForm.$setPristine();
     };
 
     $scope.submitChanges = function () {
-        console.log($scope.discipline);
         var submitIsCommitted = undefined;
         if ($scope.discipline.DcSubjectWordsID === undefined) {
-            $scope.addNewSuccess = disciplineService.addDiscipline($scope.discipline);
+            $scope.addNewSuccess = disciplineHttpService.addDiscipline($scope.discipline);
             submitIsCommitted = $scope.addNewSuccess;
         } else {
-            $scope.updateSuccess = disciplineService.updateDiscipline($scope.discipline);
+            $scope.updateSuccess = disciplineHttpService.updateDiscipline($scope.discipline);
             submitIsCommitted = $scope.updateSuccess;
         }
         if (submitIsCommitted) {
             cloneSimpleFields($scope.discipline, disciplineHistory);
             $scope.disciplineForm.$setPristine();
-            $scope.wasAdded = false;
+            $scope.activeAddButton = false;
         }
     };
 
     var removeRequest = function (element) {
-        $scope.deleteSuccess = disciplineService.removeDiscipline(element);
+        $scope.deleteSuccess = disciplineHttpService.removeDiscipline(element);
     };
 
     $scope.getErrorMessage = function (target) {
-        return disciplineService.getExceptionMessage(target);
+        return disciplineHttpService.getExceptionMessage(target);
     };
 
-    $scope.getRegexp = function (modelName) {
-        return disciplineService.getRegexp(modelName);
+
+    var filedExceptionMessages = {
+        'Name': {
+            'required': "Поле повинно бути заповнене"
+        },
+        'NameShort': {
+            'required': "Поле повинно бути заповнене"
+        },
+        'NameEng': {
+            'required': "Поле повинно бути заповнене",
+            'invalid': 'Поле не має містити літери кирилиці'
+        },
+        'NameShortEng': {
+            'required': "Поле повинно бути заповнене",
+            'invalid': 'Поле не має містити літери кирилиці'
+        },
+        'Publisher': {
+            'required': "Поле повинно бути заповнене"
+        }
+    };
+
+    var regexps = {
+        'NameEng': '[^(\u0400-\u04FF) \.]+',
+        'NameShortEng': '[^(\u0400-\u04FF) \.]+'
+    };
+
+    var getRegexp = function (fieldName) {
+        return regexps[fieldName];
+    };
+
+    var getExceptionMessage = function (exceptionName) {
+        var exceptionParams = exceptionName.split(".");
+        return fieldExceptionMessages[exceptionParams[0]][exceptionParams[1]];
     }
 }

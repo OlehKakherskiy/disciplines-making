@@ -20,6 +20,10 @@ function SystemActionsController($scope, $location) {
         alert(functionIsNotImplemented);
     };
 
+    $scope.currentAction = undefined;
+
+    $scope.collapsed = true;
+
     $scope.actions = [
         {
             id: 0,
@@ -53,8 +57,6 @@ function SystemActionsController($scope, $location) {
         }
     ];
 
-    $scope.currentAction = undefined;
-
     $scope.loadAction = function (id) {
         for (var i = 0; i < $scope.actions.length; i++)
             if ($scope.actions[i].id === id) {
@@ -62,5 +64,4 @@ function SystemActionsController($scope, $location) {
             }
     };
 
-    $scope.collapsed = true;
 }

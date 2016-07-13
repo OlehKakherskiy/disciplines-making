@@ -1,6 +1,6 @@
 angular.module('application').controller('menuController', MenuController);
 
-function MenuController($scope, $location, accessTokenSharingService) {
+function MenuController($scope, $location, sessionObject) {
 
     $scope.singIn = function () {
         $location.path('/login');
@@ -15,6 +15,6 @@ function MenuController($scope, $location, accessTokenSharingService) {
     };
 
     $scope.status = {
-        logged: accessTokenSharingService.logged
-    };
+        logged: sessionObject.get('status').logged
+    }
 }

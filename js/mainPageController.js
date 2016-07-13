@@ -1,6 +1,7 @@
 angular.module("application").controller('mainPageController', MainPageController);
 
 function MainPageController($scope) {
+
     $scope.aboutCampusInfo = [
         {
             "id": 1,
@@ -53,8 +54,6 @@ function MainPageController($scope) {
             "description": "Надання можливості викладачу отримати перелік навчальних груп, в яких він викладає, з можливістю перегляду інформації про куратора групи, старости тощо; куратору навчальної групи отримати інформацію  про кожного студента в межах навчального процесу: фото, телефон, участь в опитуванні, результати атестації та ректорського контролю; методисту зазначити кураторів навчальних груп."
         }
     ];
-
-    $scope.collapsed = true;
 
     $scope.changeCollapsed = function () {
         console.log('collapsed');
