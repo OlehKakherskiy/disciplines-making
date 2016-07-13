@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="application">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Campus</title>
+
+    <link href="css/main/header_and_footer.css" rel="stylesheet" type="text/css"/>
+    <link href="css/main/articles.css" rel="stylesheet">
+
+
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+
+    <meta charset="utf-8">
+    <script src="http://code.angularjs.org/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+
+    <!-- application scripts -->
+    <script src="js/application.js"></script>
+    <script src="js/loginController.js"></script>
+    <script src="js/menuController.js"></script>
+    <script src="js/disciplineHttpService.js"></script>
+    <script src="js/disciplineCatalogController.js"></script>
+    <script src="js/routeProvider.js"></script>
+    <script src="js/accessTokenSharingService.js"></script>
+    <script src="js/mainPageController.js"></script>
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <link rel="stylesheet" type="text/css" href="css/tree.css"/>
+
+    <link rel="stylesheet" href="lib/angular-ui-tree/angular-ui-tree.min.css">
+    <script src="lib/angular-ui-tree/angular-ui-tree.min.js"></script>
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div id="header">
+
+        <nav class="navbar navbar-default navigation navbar-fixed-top">
+            <div class="container" ng-controller="menuController">
+
+                <nav class="navbar">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">
+                                <div class="logo"></div>
+                            </a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li><a href="" ng-click="index()">Головна</a></li>
+                                <li><a href="" ng-click="index()">Про кампус</a></li>
+                                <li><a href="" ng-click="index()">Зворотній зв'язок</a></li>
+
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--<li class="hidden-md hidden-sm hidden-xs"><a href="#">Вітаємо, Іванов Іван Іванович!</a></li>-->
+                                <!--<li class="hidden-xs" id="user"><a href="#"></a></li>-->
+                                <!--<li class="hidden-xs" id="status"><a href="#"></a></li>-->
+                                <li><a href="" ng-click="singIn()" ng-hide="status.logged"> <span><span
+                                        class="glyphicon glyphicon-log-in"></span> Логін </span></a></li>
+                                <li><a href="" ng-click="logOut()" ng-show="status.logged"><span><span
+                                        class="glyphicon glyphicon-log-out"></span> Вийти</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </nav>
+    </div>
+
+    <div class="empty"></div>
+
+    <!-- CONTENT------------------------------------------------------------------------------------>
+    <div class="content" ng-view></div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                Національний технічний університет України "<a href="http://kpi.ua">Київський політехнічний інститут</a>",<br>
+                1998-2015 ©<br>
+                Адреса НТУУ "КПI": Україна, 03056, м.Київ-56, проспект Перемоги, 30<br>
+            </div>
+            <div class="col-md-6  col-sm-6">
+                Розробник каталогу - <a href="http://kbis.kpi.ua">Конструкторське бюро інформаційних систем</a><br>
+                Використання матеріалу сайту тільки з обов’язковим посиланням на <a href="http://intellect.kpi.ua">intellect.kpi.ua</a><br>
+                Каталог створено в рамках проекту "Електронний кампус КПI"
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

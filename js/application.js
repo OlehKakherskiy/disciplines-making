@@ -1,2 +1,1 @@
-angular.module('application', ['ngRoute']);
-// angular.module('login',['application']);
+angular.module('application', ['ngRoute','ngMessages','ui.tree','ngAnimate']);
