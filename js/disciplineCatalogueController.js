@@ -161,8 +161,8 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
     };
 
     var regexps = {
-        'NameEng': '[^(\u0400-\u04FF) \.]+',
-        'NameShortEng': '[^(\u0400-\u04FF) \.]+'
+        'NameEng': '[a-zA-Z\(\),\.\&]+',
+        'NameShortEng': '[a-zA-Z\(\),\.\&]+'
     };
 
     $scope.getRegexp = function (fieldName) {
