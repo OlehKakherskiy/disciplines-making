@@ -74,7 +74,7 @@
                                 <!--<li class="hidden-xs" id="status"><a href="#"></a></li>-->
                                 <li><a href="" ng-click="singIn()" ng-hide="status.logged"> <span><span
                                         class="glyphicon glyphicon-log-in"></span> Логін </span></a></li>
-                                <li><a href="" ng-click="logOut()" ng-show="status.logged"><span><span
+                                <li><a href="" ng-click="logOut()" ng-hide="!status.logged"><span><span
                                         class="glyphicon glyphicon-log-out"></span> Вийти</span></a></li>
                             </ul>
                         </div>

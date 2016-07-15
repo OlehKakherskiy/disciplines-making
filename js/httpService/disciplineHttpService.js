@@ -4,7 +4,7 @@ function DisciplineHttpService($http, sessionObject) {
     var disciplines = [];
 
     function getDescendantsRequest(parentID) {
-        //get request with undefined
+        //TODO get request with null ID (or -1)
     }
 
     function addChildren(parentID, children) {
@@ -21,52 +21,961 @@ function DisciplineHttpService($http, sessionObject) {
         }
     }
 
+    function addDiscipline(discipline) {
+        return true;
+        //TODO: http post + получаем ID и добавляем его в discipline
+    }
+
+    function removeDiscipline(discipline) {
+        return true;
+        //TODO: http post + отдаем ID
+    }
+
+    function updateDiscipline(discipline) {
+        return true;
+        //TODO: http post or update. Вытаскиваем все простые поля и передаем.
+    }
+
+    //TODO: remove this when server api will be deployed
     function getMock() {
-        return [{
-            DcSubjectWordsID: 1,
-            Name: "name1Long",
-            NameShort: "name1short",
-            NameEng: "engName1Long",
-            NameShortEng: "engName1short",
-            vcActuality: true,
-            vcChangeDate: undefined,
-            Publisher: "me",
-            nodes: [{
-                DcSubjectWordsID: 2,
-                Name: "name1.1Long",
-                NameShort: "name1.1short",
-                NameEng: "engName1.1Long",
-                NameShortEng: "engName1.1short",
+        return [
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
                 vcActuality: true,
                 vcChangeDate: undefined,
-                Publisher: "",
-                parentDiscipline: 1
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
             },
-                {
-                    DcSubjectWordsID: 3,
-                    Name: "name1.2Long",
-                    NameShort: "name1.2short",
-                    NameEng: "engName1.2Long",
-                    NameShortEng: "engName1.2short",
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
                     vcActuality: true,
                     vcChangeDate: undefined,
-                    Publisher: "",
+                    Publisher: "Мелкумян Катерина Юріївна",
                     parentDiscipline: 1
-                },
-                {
-                    DcSubjectWordsID: -1,
-                    Name: "name1.3Long",
-                    NameShort: "name1.3short",
-                    NameEng: "engName1.3Long",
-                    NameShortEng: "engName1.3short",
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
                     vcActuality: true,
                     vcChangeDate: undefined,
-                    Publisher: "",
+                    Publisher: "Мелкумян Катерина Юріївна",
                     parentDiscipline: 1
-                }
-            ],
-            parentDiscipline: undefined
-        }];
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            },
+            {
+                DcSubjectWordsID: 1,
+                Name: "Вища математика",
+                NameShort: "Вища математика",
+                NameEng: "Higher mathematics",
+                NameShortEng: "higherMath",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [{
+                    DcSubjectWordsID: 2,
+                    Name: "Вища математика -1. Теорія імовірності",
+                    NameShort: "Теорія імовірності",
+                    NameEng: "Higher mathematics -1. Theory of probability",
+                    NameShortEng: "Theory of probability",
+                    vcActuality: true,
+                    vcChangeDate: undefined,
+                    Publisher: "Мелкумян Катерина Юріївна",
+                    parentDiscipline: 1
+                }]
+            },
+            {
+                DcSubjectWordsID: 3,
+                Name: "Програмування",
+                NameShort: "Програмування",
+                NameEng: "Programming",
+                NameShortEng: "Programming",
+                vcActuality: true,
+                vcChangeDate: undefined,
+                Publisher: "Мелкумян Катерина Юріївна",
+                nodes: [
+                    {
+                        DcSubjectWordsID: 4,
+                        Name: "Програмування -1. Технології програмування",
+                        NameShort: "Технології програмування",
+                        NameEng: "Programming -1. Programming technologies",
+                        NameShortEng: "Programming technologies",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Алгоритмічне програмування",
+                        NameShort: "Алгоритмічне програмування",
+                        NameEng: "Programming -1. Algorithmic programming",
+                        NameShortEng: "Algorithmic programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 6,
+                        Name: "Програмування -1. Модульне програмування",
+                        NameShort: "Модульне програмування",
+                        NameEng: "Programming -1. Modular programming",
+                        NameShortEng: "Modular programming",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    },
+                    {
+                        DcSubjectWordsID: 5,
+                        Name: "Програмування -1. Об'єктно-орієнтоване програмування",
+                        NameShort: "ООП",
+                        NameEng: "Programming -1. Object-oriented programming",
+                        NameShortEng: "OOP",
+                        vcActuality: true,
+                        vcChangeDate: undefined,
+                        Publisher: "Мелкумян Катерина Юріївна",
+                        parentDiscipline: 3
+                    }
+                ]
+
+            }
+        ]
     }
 
     return {
@@ -76,18 +985,10 @@ function DisciplineHttpService($http, sessionObject) {
             return disciplines;
         },
 
-        addDiscipline: function (discipline) {
-            return true;
-            //http post + получаем ID и добавляем его в discipline
-        },
+        addDiscipline: addDiscipline,
 
-        removeDiscipline: function (discipline) {
-            return true;
-            //http post передаем ID
-        },
+        removeDiscipline: removeDiscipline,
 
-        updateDiscipline: function (discipline) {
-            return true;
-        }
+        updateDiscipline: updateDiscipline
     };
 }

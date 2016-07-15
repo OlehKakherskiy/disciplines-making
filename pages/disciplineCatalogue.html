@@ -10,10 +10,10 @@
                 <div ui-tree data-drag-enabled="false" class="angular-ui-tree">
                     <ol ui-tree-nodes="" ng-model="list"
                         class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes">
-                        <!-- <li ng-repeat="item in list | filter:disciplineSearch | limitTo:limitTo:startsFrom:startsFrom" ui-tree-node class="angular-ui-tree-node" collapsed="true"> -->
                         <li ng-repeat="item in list | filter:disciplineSearch |limitTo:limitTo" ui-tree-node
                             class="angular-ui-tree-node" collapsed="true">
-                            <div ui-tree-handle class="tree-node tree-node-content angular-ui-tree-handle">
+                            <div ui-tree-handle class="tree-node tree-node-content angular-ui-tree-handle"
+                                 ng-class="{'tree-node-selected':$index == selectedFirstLevelIndex}">
                                 <a class="btn btn-success-outline btn-xs" ng-if="item.nodes && item.nodes.length > 0"
                                    data-nodrag ng-click="toggle(this)">
                                     <span class="glyphicon"
@@ -21,16 +21,16 @@
                                 </a>
                                 {{item.Name}}
                                 <a class="pull-right btn btn-danger-outline btn-xs" data-toggle="tooltip"
-                                   title="Видалити дисципліну"
+                                   title="Видалити"
                                    ng-click="removeDiscipline(this,$index,-1)"><span
                                         class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-primary-outline btn-xs" data-nodrag
                                    ng-click="showDetailInformation(item, $index)" data-toggle="tooltip"
-                                   title="Переглянути/Редагувати деталі"><span
+                                   title="Редагувати"><span
                                         class="glyphicon glyphicon-pencil"></span></a>
                                 <a class="pull-right btn btn-primary-outline btn-xs"
                                    ng-class="{inactive:!activeAddButton}"
-                                   data-toggle="tooltip" title="Додати дисципліну"
+                                   data-toggle="tooltip" title="Створити"
                                    ng-disabled="item.nodes && item.nodes.length > 0 && collapsed" data-nodrag
                                    ng-click="addNewDiscipline(this, $index,-1)"><span
                                         class="glyphicon glyphicon-plus"></span></a>
@@ -38,15 +38,17 @@
                             <ol ui-tree-nodes="" ng-model="item.nodes" ng-class="{hidden: collapsed}"
                                 class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes">
                                 <li ng-repeat="subItem in item.nodes" ui-tree-node>
-                                    <div ui-tree-handle class="tree-node tree-node-content">
+                                    <div ui-tree-handle class="tree-node tree-node-content"
+                                         ng-class="{'tree-node-selected':$index == selectedSecondLevelIndex &&
+                                         $parent.$parent.$index == selectedFirstLevelIndex}">
                                         {{subItem.Name}}
                                         <a class="pull-right btn btn-danger-outline btn-xs" data-nodrag
                                            ng-click="removeDiscipline(this,$parent.$parent.$index, $index)"><span
                                                 class="glyphicon glyphicon-remove"
-                                                data-toggle="tooltip" title="Видалити дисципліну"></span></a>
+                                                data-toggle="tooltip" title="Видалити"></span></a>
                                         <a class="pull-right btn btn-primary-outline btn-xs"
                                            ng-click="showDetailInformation(subItem, $parent.$parent.$index, $index)"
-                                           data-toggle="tooltip" title="Переглянути/Редагувати деталі">
+                                           data-toggle="tooltip" title="Редагувати">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                     </div>
@@ -56,10 +58,11 @@
                     </ol>
                 </div>
                 <a class="btn btn-primary-outline btn-lg" data-nodrag ng-class="{inactive:!activeAddButton}"
-                   ng-click="addNewDiscipline(this, -1) "><span
-                        class="glyphicon glyphicon-plus"></span></a>
+                   ng-click="addNewDiscipline(this, -1) "><span class="glyphicon glyphicon-plus"
+                                                                data-toggle="tooltip" title="Створити"></span></a>
                 <a class="btn btn-primary-outline btn-lg" ng-class="{inactive : !hasMoreDisciplines}"
-                   ng-click="getMoreElements()"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                   ng-click="getMoreElements()"><span class="glyphicon glyphicon-chevron-down"
+                                                      data-toggle="tooltip" title="Більше"></span></a>
             </div>
 
             <div class="alert alert-success fade in" ng-show="addNewSuccess">
@@ -86,17 +89,17 @@
 
             <div class="alert alert-success fade in" ng-show="deleteSuccess" ng-click="resetDeleteFlag()">
                 <a href="" class="close" aria-label="close">&times;</a>Дисципліна
-                {{discipline.Name}} видалена успішно.
+                {{removedDiscipline.Name}} видалена успішно.
             </div>
             <div class="alert alert-danger fade in" ng-show="deleteSuccess!== undefined && !deleteSuccess"
                  ng-click="resetDeleteFlag()">
                 <a href="" class="close" aria-label="close">&times;</a>Помилка при видаленні
-                дисципліни {{discipline.Name}}. Спробуйте ще раз.
+                дисципліни {{removedDiscipline.Name}}. Спробуйте ще раз.
             </div>
         </div>
         <!--Discipline details form-->
         <div class="col-md-4">
-            <div class="card" data-spy="affix" data-offset-bottom="180">
+            <div class="card" data-spy="affix" data-offset-bottom="184" style="position: fixed">
                 <div class="card-block">
                     <form name="disciplineForm" novalidate>
 
@@ -108,7 +111,7 @@
                                    placeholder="Назва дисципліни" required>
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.Name.$invalid && !disciplineForm.Name.$pristine && !focusName"></span>
-                            <div ng-messages="disciplineForm.Name.$error"
+                            <div ng-messages="disciplineForm.Name.$error" class="error"
                                  ng-show="disciplineForm.Name.$invalid && !disciplineForm.Name.$pristine">
                                 <p ng-message="required">{{getErrorMessage("Name.required")}}</p>
                             </div>
@@ -123,7 +126,7 @@
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.NameShort.$invalid && !disciplineForm.NameShort.$pristine && !focusShortName"></span>
                             <!--exceptions-->
-                            <div ng-messages="disciplineForm.NameShort.$error"
+                            <div ng-messages="disciplineForm.NameShort.$error" class="error"
                                  ng-show="disciplineForm.NameShort.$invalid && !disciplineForm.NameShort.$pristine">
                                 <p ng-message="required">{{getErrorMessage("NameShort.required")}}</p>
                             </div>
@@ -139,7 +142,7 @@
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.NameEng.$invalid && !disciplineForm.NameEng.$pristine && !focusNameEng"></span>
                             <!--exceptions-->
-                            <div ng-messages="disciplineForm.NameEng.$error"
+                            <div ng-messages="disciplineForm.NameEng.$error" class="error"
                                  ng-show="disciplineForm.NameEng.$invalid && !disciplineForm.NameEng.$pristine">
                                 <p ng-message="required">{{getErrorMessage("NameEng.required")}}</p>
                                 <p ng-message="pattern">{{getErrorMessage("NameEng.invalid")}}</p>
@@ -158,7 +161,7 @@
                             <span class="glyphicon glyphicon-remove form-control-feedback"
                                   ng-show="disciplineForm.NameShortEng.$invalid && !disciplineForm.NameShortEng.$pristine && !focusNameEng"></span>
                             <!--exceptions-->
-                            <div ng-messages="disciplineForm.NameShortEng.$error"
+                            <div ng-messages="disciplineForm.NameShortEng.$error" class="error"
                                  ng-show="disciplineForm.NameShortEng.$invalid && !disciplineForm.NameShortEng.$pristine">
                                 <p ng-message="required">{{getErrorMessage("NameShortEng.required")}}</p>
                                 <p ng-message="pattern">{{getErrorMessage("NameShortEng.invalid")}}</p>
@@ -168,7 +171,8 @@
                         <!-- Дата зміни: -->
                         <div class="form-group">
                             <label for="changeDate">Дата зміни:</label>
-                            <input type="text" class="form-control" id="changeDate" ng-model="discipline.vcChangeDate"
+                            <input type="date" class="form-control" id="changeDate" ng-model="discipline.vcChangeDate"
+                                   placeholder="d/m/yyyy"
                                    name="changeDate" ng-disabled="true">
                         </div>
 
@@ -179,10 +183,10 @@
                             <input type="text" class="form-control" id="publisher" ng-model="discipline.Publisher"
                                    ng-disabled="disableForm"
                                    name="Publisher" required>
-                            <span class="glyphicon glyphicon-remove form-control-feedback"
+                            <span class="glyphicon glyphicon-remove form-control-feedback " ng-disabled="userElement"
                                   ng-show="disciplineForm.Publisher.$invalid && !disciplineForm.Publisher.$pristine && !focusPublisher"></span>
                             <!--exceptions-->
-                            <div ng-messages="disciplineForm.Publisher.$error"
+                            <div ng-messages="disciplineForm.Publisher.$error" class="error"
                                  ng-show="disciplineForm.Publisher.$invalid && !disciplineForm.Publisher.$pristine">
                                 <p ng-message="required">{{getErrorMessage("Publisher.required")}}</p>
                             </div>

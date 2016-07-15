@@ -11,6 +11,12 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
 
     $scope.activeAddButton = true;
 
+    $scope.userElement = false;
+
+    $scope.selectedFirstLevelIndex = -1;
+
+    $scope.selectedSecondLevelIndex = -1;
+
     $scope.discipline = {
         DcSubjectWordsID: undefined,
         Name: "Нова дисципліна",
@@ -21,6 +27,8 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
         vcChangeDate: undefined,
         Publisher: ""
     };
+
+    $scope.removedDiscipline = {};
 
     $scope.deleteSuccess = undefined;
     $scope.updateSuccess = undefined;
@@ -60,19 +68,21 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
 
     //removes discipline from list and BD
     $scope.removeDiscipline = function (element, index1Level, index2Level) {
-        $scope.disableForm = true;
         var success = undefined;
-
-        //операция выполнена успешно, если элемент не менялся и на форме детальной инфы не отображается или если удален успешно с БД 
-        success = ($scope.disciplineForm.$pristine) ? true : removeRequest(element);
-
+        $scope.removedDiscipline = element.$modelValue;
+        success = (element.DcSubjectWordsID === undefined) ? true : removeRequest(element);
+        console.log(success);
         if (success) {
             element.remove();
             hasMoreDisciplines();
             var elemPos = disciplineInformationService.getCurrentElementPosition();
-
+            console.log(elemPos);
+            console.log($scope.removedDiscipline);
             //очищаем, детальная инфа которого сейчас отображается или его родительский элемент
             if (elemPos[0] == index1Level && (index2Level == elemPos[1] || index2Level == -1)) {
+                $scope.selectedFirstLevelIndex = -1;
+                $scope.selectedSecondLevelIndex = -1;
+                $scope.disableForm = true;
                 disciplineInformationService.clearHistory();
                 $scope.activeAddButton = true;
             }
@@ -84,9 +94,8 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
 
     $scope.addNewDiscipline = function (scope, index1Level) {
 
-        $scope.disableForm = false; //TODO: в методе showDetailInformation тоже есть это действие
         $scope.activeAddButton = false;
-
+        $scope.userElement = true;
         var parentDiscipline = scope.$modelValue;
         var newDiscipline = disciplineCatalogueService.addElement(parentDiscipline, index1Level);
 
@@ -99,9 +108,13 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
     };
 
     $scope.showDetailInformation = function (element, index1Level, index2Level) {
+        console.log(element);
         $scope.discipline = element;
         $scope.disableForm = false;
-
+        $scope.selectedFirstLevelIndex = index1Level;
+        $scope.selectedSecondLevelIndex = index2Level;
+        //TODO: деактивация поля имени создателя дисциплины, если создатель этой дисциплины = этот юзер
+        $scope.userElement = element.Publisher === disciplineCatalogueService.getUserName();
         disciplineInformationService.setCurrentElementPosition(index1Level, index2Level);
         disciplineInformationService.saveToHistory(element);
     };
@@ -127,12 +140,15 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
         if (submitIsCommitted) {
             disciplineInformationService.saveToHistory($scope.discipline);
             $scope.disciplineForm.$setPristine();
+            $scope.discipline.vcChangeDate = new Date();
+            disciplineInformationService.saveToHistory($scope.discipline);
             $scope.activeAddButton = true;
         }
     };
 
     var removeRequest = function (element) {
         $scope.deleteSuccess = disciplineHttpService.removeDiscipline(element);
+        return $scope.deleteSuccess;
     };
 
     $scope.getErrorMessage = function (exceptionName) {
@@ -161,8 +177,8 @@ function DisciplineCatalogueController($scope, disciplineCatalogueService, disci
     };
 
     var regexps = {
-        'NameEng': '[a-zA-Z\(\),\.\&]+',
-        'NameShortEng': '[a-zA-Z\(\),\.\&]+'
+        'NameEng': '[a-zA-Z\(\),\.\& ]+',
+        'NameShortEng': '[a-zA-Z\(\),\.\& ]+'
     };
 
     $scope.getRegexp = function (fieldName) {

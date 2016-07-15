@@ -33,6 +33,11 @@ angular.module('application').service('disciplineInformationService', function (
         return [firstLevelIndex, secondLevelIndex];
     };
 
+    var setCurrentElementPosition = function (level1Index, level2Index) {
+        firstLevelIndex = level1Index;
+        secondLevelIndex = level2Index;
+    };
+
     var clearHistory = function () {
         firstLevelIndex = undefined;
         secondLevelIndex = undefined;
@@ -40,11 +45,6 @@ angular.module('application').service('disciplineInformationService', function (
     };
 
     clearHistory();
-
-    var setCurrentElementPosition = function (level1Index, level2Index) {
-        firstLevelIndex = level1Index;
-        secondLevelIndex = level2Index;
-    };
 
     return {
         saveToHistory: saveToHistory,

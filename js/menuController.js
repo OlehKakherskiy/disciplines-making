@@ -14,7 +14,5 @@ function MenuController($scope, $location, sessionObject) {
         $location.path('/index');
     };
 
-    $scope.status = {
-        logged: sessionObject.get('status').logged
-    }
+    $scope.status = sessionObject.get('status');
 }

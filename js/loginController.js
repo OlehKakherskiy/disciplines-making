@@ -8,7 +8,12 @@ function LoginController($http, $location, loginHttpService) {
     vm.clearForm = clearForm;
 
     function signIn() {
-        loginHttpService.post(vm.login, vm.password, loginSuccess, loginError);
+        loginHttpService.signIn(vm.login, vm.password, loginSuccess, loginError);
+        loginHttpService.getUserInfo(function (data) { //TODO: запрос пока что не работает
+            console.log(data);
+        }, function (response) {
+            console.log(response);
+        })
     }
 
     //processes while login was successful
